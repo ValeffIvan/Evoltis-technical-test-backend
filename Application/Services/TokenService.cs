@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
@@ -36,8 +37,14 @@ public class TokenService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        // Crear la clave de seguridad a partir de la clave secreta
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+        // Convertir la clave secreta a bytes y derivar una clave de 256 bits usando SHA256
+        var keyBytes = Encoding.UTF8.GetBytes(_secretKey);
+        using (var sha256 = SHA256.Create())
+        {
+            keyBytes = sha256.ComputeHash(keyBytes);
+        }
+        var key = new SymmetricSecurityKey(keyBytes);
+
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         // Configuración del token
