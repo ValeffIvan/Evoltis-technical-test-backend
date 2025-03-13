@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Application.Mapping
 {
-    public class UsuarioProfile : Profile
+    public class UserProfile : Profile
     {
-        public UsuarioProfile() {
-            CreateMap<User, UsuarioResponseDto>();
-            CreateMap<User, UsuarioLoginDto>();
+        public UserProfile() {
+            CreateMap<User, UserResponseDto>();
+            CreateMap<UserRegisterDto, User>();
         }
 
     }

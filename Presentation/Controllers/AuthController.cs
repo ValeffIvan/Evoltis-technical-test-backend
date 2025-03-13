@@ -8,28 +8,26 @@ namespace Presentation.Controllers
     [Route("[controller]")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuth _authService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IAuth authService)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UsuarioLoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
-            var resultado = await _authService.LoginAsync(loginDto.Email, loginDto.Password);
+            var resultado = await _authService.LoginAsync(loginDto);
             if (resultado == null)
                 return Unauthorized("Credenciales inválidas");
-
-            // Aquí podrías generar y devolver un token JWT si lo requieres
             return Ok(resultado);
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UsuarioRegisterDto loginDto)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDto loginDto)
         {
-            var resultado = await _authService.Register(loginDto.Name, loginDto.Email, loginDto.Password);
+            var resultado = await _authService.RegisterAsync(loginDto);
             if (resultado == null)
                 return BadRequest("No se pudo registrar el usuario");
 
