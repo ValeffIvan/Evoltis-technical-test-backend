@@ -11,6 +11,6 @@ namespace Domain.DTOs
         public int? Id { get; set; }
         public string? Name { get; set; }
         public string? Genre { get; set; }
-        public string? Note { get; set; }
+        public int? Note { get; set; }
     }
 }

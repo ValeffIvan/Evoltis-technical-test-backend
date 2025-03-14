@@ -46,34 +46,27 @@ namespace Infrastructure.Repositories
         {
             var query = _context.VideoGames.AsQueryable();
 
-            // Filtrar por Id (si se especifica)
             if (filters.Id.HasValue)
             {
                 query = query.Where(vg => vg.Id == filters.Id.Value);
             }
 
-            // Filtrar por Name
             if (!string.IsNullOrEmpty(filters.Name))
             {
                 query = query.Where(vg => vg.Name.Contains(filters.Name));
             }
 
-            // Filtrar por Genre
             if (!string.IsNullOrEmpty(filters.Genre))
             {
                 query = query.Where(vg => vg.Genre.Contains(filters.Genre));
             }
 
-            // Filtrar por Note
-            if (filters.Id.HasValue)
+            if (filters.Note.HasValue)
             {
-                query = query.Where(vg => vg.Id == filters.Id.Value);
+                query = query.Where(vg => vg.Note == filters.Note.Value);
             }
 
 
-            // Se pueden agregar más filtros de forma similar
-
-            // Aplicar la paginación
             return await query
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
