@@ -1,12 +1,14 @@
 ﻿using Application.Services;
 using Domain.DTOs;
 using Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class VideoGamesController : Controller
     {
         private readonly IVideoGamesService _videoGamesService;

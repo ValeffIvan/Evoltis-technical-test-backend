@@ -37,14 +37,9 @@ public class TokenService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        // Convertir la clave secreta a bytes y derivar una clave de 256 bits usando SHA256
+        // Usar la clave secreta directamente, sin hash
         var keyBytes = Encoding.UTF8.GetBytes(_secretKey);
-        using (var sha256 = SHA256.Create())
-        {
-            keyBytes = sha256.ComputeHash(keyBytes);
-        }
         var key = new SymmetricSecurityKey(keyBytes);
-
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         // Configuración del token
