@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace Application.Mapping
 {
-    public class UserProfile : Profile
+    public class VideoGameMapper : Profile
     {
-        public UserProfile() {
-            CreateMap<User, UserResponseDto>();
-            CreateMap<UserRegisterDto, User>();
+        public VideoGameMapper()
+        {
+            CreateMap<VideoGame, VideoGameCreateDto>();
+            CreateMap<VideoGameCreateDto, VideoGame>();
         }
-
     }
 }

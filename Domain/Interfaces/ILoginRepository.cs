@@ -10,10 +10,9 @@ namespace Domain.Interfaces
 {
     public interface ILoginRepository
     {
-        Task<User> LoginAsync(string email, string password);
-
         Task<User> RegisterAsync(User user);
 
         Task<User> GetUserByEmailAsync(string email);
+
     }
 }

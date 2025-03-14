@@ -30,10 +30,32 @@ namespace Application.Services
             _tokenService = new TokenService(secretKey, expirationDays, issuer, audience);
         }
 
-        public Task<UserResponseDto> LoginAsync(UserLoginDto userLoginDto)
+        public async Task<UserResponseDto> LoginAsync(UserLoginDto userLoginDto)
         {
-            throw new NotImplementedException();
+            // 1. Buscar el usuario por email en la base de datos
+            var user = await _loginRepository.GetUserByEmailAsync(userLoginDto.Email);
+
+            if (user == null)
+            {
+                throw new Exception("Usuario no encontrado.");
+            }
+
+            // 2. Verificar si la contraseña es correcta
+            if (!BCrypt.Net.BCrypt.Verify(userLoginDto.Password, user.Password))
+            {
+                throw new Exception("Credenciales inválidas.");
+            }
+
+            // 3. Generar el token JWT
+            var token = _tokenService.GenerateToken(user);
+
+            // 4. Mapear la entidad a DTO de respuesta y asignar el token
+            var responseDto = _mapper.Map<UserResponseDto>(user);
+            responseDto.Token = token;
+
+            return responseDto;
         }
+
 
         public async Task<UserResponseDto> RegisterAsync(UserRegisterDto userRegisterDto)
         {

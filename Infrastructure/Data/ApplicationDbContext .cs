@@ -12,5 +12,6 @@ namespace Infraestructure.Data
 
         // DbSets
         public DbSet<User> Users { get; set; }
+        public DbSet<VideoGame> VideoGames { get; set; }
     }
 }

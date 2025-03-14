@@ -23,11 +23,6 @@ namespace Infrastructure.Repositories
             _mapper = mapper;
         }
 
-        public Task<User> LoginAsync(string email, string password)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<User> RegisterAsync(User user)
         {
             _context.Users.Add(user);
@@ -35,9 +30,9 @@ namespace Infrastructure.Repositories
             return user;
         }
 
-        public Task<User> GetUserByEmailAsync(string email)
+        public async Task<User> GetUserByEmailAsync(string email)
         {
-            return _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
         }
     }
 }
