@@ -18,20 +18,30 @@ namespace Presentation.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
         {
+            try { 
             var resultado = await _authService.LoginAsync(loginDto);
-            if (resultado == null)
-                return Unauthorized("Credenciales inválidas");
             return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserRegisterDto loginDto)
         {
-            var resultado = await _authService.RegisterAsync(loginDto);
-            if (resultado == null)
-                return BadRequest("No se pudo registrar el usuario");
+            try
+            {
+                var resultado = await _authService.RegisterAsync(loginDto);
 
-            return Ok(resultado);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

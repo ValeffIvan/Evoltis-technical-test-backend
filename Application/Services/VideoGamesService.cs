@@ -27,7 +27,7 @@ namespace Application.Services
             var existingVideoGame = await _videoGamesRepository.GetVideoGameByNameAsync(videoGamesCreateDto.Name);
             if (existingVideoGame != null)
             {
-                throw new Exception("Video game already exists");
+                throw new Exception("El videojuego ya existe");
             }
 
             var newVideoGame = _mapper.Map<VideoGame>(videoGamesCreateDto);
@@ -66,7 +66,7 @@ namespace Application.Services
             var videoGame = await _videoGamesRepository.GetVideoGameByIdAsync(id);
             if (videoGame == null)
             {
-                throw new Exception("Video game not found");
+                throw new Exception("El videojuego no encontrado");
             }
 
             // Mapear las propiedades del DTO al objeto existente usando AutoMapper
